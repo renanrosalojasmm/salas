@@ -1,0 +1,10 @@
+version: '2.1'
+
+services:
+  salas:
+    image: salas
+    build: .
+    environment:
+      NODE_ENV: production
+    ports:
+      - 9098:9098

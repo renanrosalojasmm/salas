@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="github-fork-ribbon-css/gh-fork-ribbon.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="jquery/dist/jquery.slim.min.js"></script>
+    <script src="popper.js/dist/umd/popper.min.js"></script>
+    <script src="bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="angular/angular.js"></script>
+    <link rel="stylesheet" href="izitoast/dist/css/iziToast.min.css">
+    <script type="text/javascript" src="izitoast/dist/js/iziToast.min.js"></script>
+    <script type="text/javascript" src="angular.js"></script>
+    <script type="text/javascript" src="salas.js"></script>
+</head>
+
+<body class="body" ng-app="salas" ng-controller="mainController" ng-init="carregarHistorico()">
+    
+    <a class="github-fork-ribbon" href="http://url.to-your.repo" data-ribbon="Fork me on GitHub" title="Fork me on GitHub">Fork me on GitHub</a>
+    
+    <div class="container-fluid container-fluid-custom" >
+        <div class="row">
+            <div class="col-md-12">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-custom">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1">
+                        <span class="navbar-toggler-icon"></span>
+                    </button> <a class="navbar-brand labs" href="#"><b><label
+                                class="mm">MM</label>Labs</b> - Salas de
+                        Homologação</a>
+
+                    <ul class="navbar-nav ml-md-auto navbar-custom-II">
+                        <li class="nav-item active">
+                            <a class="nav-link labs" href="#" ng-click="carregarHistorico()" data-toggle="modal"
+                                data-target="#myModal">Histórico<span
+                                    class="sr-only">(current)</span></a>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="row">
+
+                </div>
+                <div class="row row-custom">
+                    <div class="col-md-4">
+                    </div>
+                    <div class="col-md-4">
+                        <br>
+                        <form role="form">
+                            <div class="form-group">
+                                <label for="exampleInputMatricula">
+                                    URL do projeto no github
+                                </label>
+                                <input type="text" ng-model="sala.projeto" class="form-control"
+                                    id="exampleInputMatricula" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputBranch">
+                                    Branch
+                                </label>
+                                <input type="text" ng-model="sala.branch" class="form-control" id="exampleInputBranch"
+                                    required />
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputAutor">
+                                    Autor
+                                </label>
+                                <input type="text" ng-model="sala.autor" class="form-control" id="exampleInputAutor"
+                                    required />
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputNumber">
+                                    Ordem de serviço
+                                </label>
+                                <input type="number" ng-model="sala.os" class="form-control" id="exampleInputNumber"
+                                    required />
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputMessage">
+                                    Descrição
+                                </label>
+                                <textarea class="form-control" id="exampleInputMessage" rows="4" cols="50"
+                                    ng-model="sala.descricao" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary button-confirm-custom" ng-click="criarSala()">
+                                Criar Sala
+                            </button>
+                        </form>
+                        <br>
+                        <br>
+                        <br>
+                    </div>
+                    <div class="col-md-4"></div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer font-small blue pt-4 page-footer-custom">
+            <div class="footer-copyright text-center py-3"><b>© 2018 MMLabs</b></a>
+                <p></p>
+            </div>
+        </footer>
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Salas</h4>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">X</button>
+                    </div>
+                    <div class="modal-body">
+                        <ul>
+                            <li ng-repeat="sala in historico">
+                                <p>
+                                    <h5>Autor: {{sala.autor}}</h5>
+                                </p>
+                                <p>Host: <a href="{{sala.host}}">{{sala.host}}</a></p>
+                                <p>Projeto: {{sala.projeto}}</p>
+                                <p>Branch: {{sala.branch}}</p>
+                                <p>OS: {{sala.os}}</p>
+                                <p>Descrição: {{sala.descricao}}</p>
+                                <button ng-click="excluir(sala)" type="button" class="btn btn-danger button-delete">Excluir</button>
+                                <button ng-click="pull(sala)" type="button" class="btn btn-primary button-confirm-custom">Pull</button>
+
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
