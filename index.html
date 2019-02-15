@@ -3,8 +3,7 @@
 
 <head>
     <link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="github-fork-ribbon-css/gh-fork-ribbon.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/github-fork-ribbon-css/gh-fork-ribbon.css">
     <script src="jquery/dist/jquery.slim.min.js"></script>
     <script src="popper.js/dist/umd/popper.min.js"></script>
     <script src="bootstrap/dist/js/bootstrap.min.js"></script>
@@ -15,25 +14,28 @@
     <script type="text/javascript" src="salas.js"></script>
 </head>
 
-<body class="body" ng-app="salas" ng-controller="mainController" ng-init="carregarHistorico()">
-    
-    <a class="github-fork-ribbon" href="http://url.to-your.repo" data-ribbon="Fork me on GitHub" title="Fork me on GitHub">Fork me on GitHub</a>
-    
-    <div class="container-fluid container-fluid-custom" >
+<body ng-app="salas" ng-controller="mainController" style="font-family: 'Segoe UI'; font-weight: lighter;"
+    ng-init="carregarHistorico()">
+
+    <a class="github-fork-ribbon" href="https://github.com/renanrosalojasmm/salas" data-ribbon="Fork me on GitHub" title="Fork me on GitHub">Fork me on GitHub</a>
+
+    <div class="
+    container-fluid" style="padding-left: 0px !important; padding-right: 0 !important">
         <div class="row">
             <div class="col-md-12">
-                <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-custom">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light"
+                    style="background-color: #24292e !important; height: 10%;">
                     <button class="navbar-toggler" type="button" data-toggle="collapse"
                         data-target="#bs-example-navbar-collapse-1">
                         <span class="navbar-toggler-icon"></span>
-                    </button> <a class="navbar-brand labs" href="#"><b><label
-                                class="mm">MM</label>Labs</b> - Salas de
+                    </button> <a class="navbar-brand" href="#" style="color: white !important"><b><label
+                                style="color: red">MM</label>Labs</b> - Salas de
                         Homologação</a>
 
-                    <ul class="navbar-nav ml-md-auto navbar-custom-II">
+                    <ul class="navbar-nav ml-md-auto" style="padding-right: 100px">
                         <li class="nav-item active">
-                            <a class="nav-link labs" href="#" ng-click="carregarHistorico()" data-toggle="modal"
-                                data-target="#myModal">Histórico<span
+                            <a class="nav-link" href="#" ng-click="carregarHistorico()" data-toggle="modal"
+                                data-target="#myModal" style="color: white !important">Histórico <span
                                     class="sr-only">(current)</span></a>
                         </li>
                     </ul>
@@ -41,7 +43,8 @@
                 <div class="row">
 
                 </div>
-                <div class="row row-custom">
+                <div class="row" style="background-color: #f6f8fa!important"
+                    style="margin-left: 0 !important; margin-right: 0 !important">
                     <div class="col-md-4">
                     </div>
                     <div class="col-md-4">
@@ -82,7 +85,8 @@
                                 <textarea class="form-control" id="exampleInputMessage" rows="4" cols="50"
                                     ng-model="sala.descricao" required></textarea>
                             </div>
-                            <button type="submit" class="btn btn-primary button-confirm-custom" ng-click="criarSala()">
+                            <button type="submit" class="btn btn-primary" ng-click="criarSala()"
+                                style="background-color: #28a745; border-color: white; background-image: linear-gradient(-180deg,#34d058,#28a745 90%);">
                                 Criar Sala
                             </button>
                         </form>
@@ -94,7 +98,7 @@
                 </div>
             </div>
         </div>
-        <footer class="page-footer font-small blue pt-4 page-footer-custom">
+        <footer class="page-footer font-small blue pt-4" style="color: white; background-color: black;">
             <div class="footer-copyright text-center py-3"><b>© 2018 MMLabs</b></a>
                 <p></p>
             </div>
@@ -120,8 +124,10 @@
                                 <p>Branch: {{sala.branch}}</p>
                                 <p>OS: {{sala.os}}</p>
                                 <p>Descrição: {{sala.descricao}}</p>
-                                <button ng-click="excluir(sala)" type="button" class="btn btn-danger button-delete">Excluir</button>
-                                <button ng-click="pull(sala)" type="button" class="btn btn-primary button-confirm-custom">Pull</button>
+                                <button ng-click="excluir(sala)" type="button" class="btn btn-danger"
+                                    style="background-color:#cb2431">Excluir</button>
+                                <button ng-click="pull(sala)" type="button" class="btn btn-primary"
+                                    style="background-color: #28a745; border-color: white; background-image: linear-gradient(-180deg,#34d058,#28a745 90%);">Pull</button>
 
                             </li>
                         </ul>
