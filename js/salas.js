@@ -1,9 +1,36 @@
-var app = angular.module('salas', []);
+var app = angular.module('salas', ['ngTable']);
 
 app.controller('mainController', function ($scope, $http) {
 
-    //var host = 'http://localhost:9098';
     var host = 'http://10.1.2.32:9098';
+
+    $scope.names = [
+        "Alexsandra Marques",
+        "Anny Navarro",
+        "Awdren Venancio",
+        "Eduardo Cordeiro",
+        "Eduardo Rodrigues",
+        "Fernanda Szumski",
+        "Hector Nagao",
+        "Jean Mello",
+        "Jessica Machado",
+        "Jessica Zambianco",
+        "Joao Pucci",
+        "Lucas Rosa",
+        "Nilton Amaral",
+        "Paulo Ribas",
+        "Renan Rosa",
+        "Vinicius Santos"
+    ];
+
+    $scope.info = function (sala) {
+        iziToast.info({
+            title: '',
+            message: 'Descrição: ' + sala.descricao,
+            position: 'center',
+            overlay: true
+        });
+    }
 
     $scope.excluir = function (sala) {
         iziToast.show({
@@ -113,6 +140,7 @@ app.controller('mainController', function ($scope, $http) {
     }
 
     $scope.criarSala = function () {
+
         iziToast.info({
             title: 'Aguarde',
             message: 'Criando sala',
@@ -124,6 +152,9 @@ app.controller('mainController', function ($scope, $http) {
             timeout: 1000000
         });
 
+        $scope.sala.projeto = 'https://github.com/lojasmm/MMWeb.git';
+        $scope.sala.autor = $scope.autor.replace(" ", "-");
+
         $http({
             method: 'GET',
             url: host + '/criarsala',
@@ -134,7 +165,7 @@ app.controller('mainController', function ($scope, $http) {
             iziToast.destroy();
             iziToast.success({
                 title: 'Sucesso',
-                message: 'Sala criada, para acessá-la use: ' + response.data,
+                message: 'Sala criada, para acessá-la use: <a href="' + response.data + '" target="Salas"> ' + response.data + '</a>',
                 position: 'center',
                 overlay: true,
                 close: true,

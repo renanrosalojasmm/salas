@@ -12,12 +12,15 @@
     <script type="text/javascript" src="izitoast/dist/js/iziToast.min.js"></script>
     <script type="text/javascript" src="angular.js"></script>
     <script type="text/javascript" src="salas.js"></script>
+    <link rel="stylesheet" ; href="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.css">
+    <script src="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.js"></script>
 </head>
 
 <body ng-app="salas" ng-controller="mainController" style="font-family: 'Segoe UI'; font-weight: lighter;"
     ng-init="carregarHistorico()">
 
-    <a class="github-fork-ribbon" href="https://github.com/renanrosalojasmm/salas" data-ribbon="Fork me on GitHub" title="Fork me on GitHub">Fork me on GitHub</a>
+    <a class="github-fork-ribbon" href="https://github.com/renanrosalojasmm/salas" data-ribbon="Fork me on GitHub"
+        title="Fork me on GitHub">Fork me on GitHub</a>
 
     <div class="
     container-fluid" style="padding-left: 0px !important; padding-right: 0 !important">
@@ -51,13 +54,6 @@
                         <br>
                         <form role="form">
                             <div class="form-group">
-                                <label for="exampleInputMatricula">
-                                    URL do projeto no github
-                                </label>
-                                <input type="text" ng-model="sala.projeto" class="form-control"
-                                    id="exampleInputMatricula" required />
-                            </div>
-                            <div class="form-group">
                                 <label for="exampleInputBranch">
                                     Branch
                                 </label>
@@ -68,8 +64,12 @@
                                 <label for="exampleInputAutor">
                                     Autor
                                 </label>
-                                <input type="text" ng-model="sala.autor" class="form-control" id="exampleInputAutor"
-                                    required />
+                                <div class="dropdown">
+                                    <select class="dropdown" ng-model="autor">
+                                        <option ng-repeat="x in names">{{x}}</option>
+                                    </select>
+                                </div>
+
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputNumber">
@@ -99,13 +99,13 @@
             </div>
         </div>
         <footer class="page-footer font-small blue pt-4" style="color: white; background-color: black;">
-            <div class="footer-copyright text-center py-3"><b>© 2018 MMLabs</b></a>
+            <div class="footer-copyright text-center py-3"><b>© 2019 MMLabs</b></a>
                 <p></p>
             </div>
         </footer>
         <!-- Modal -->
         <div class="modal fade" id="myModal" role="dialog">
-            <div class="modal-dialog">
+            <div class="modal-dialog" style="max-width: 900px">
 
                 <!-- Modal content-->
                 <div class="modal-content">
@@ -114,12 +114,18 @@
                         <button type="button" class="btn btn-default" data-dismiss="modal">X</button>
                     </div>
                     <div class="modal-body">
+                        <div class="form-group">
+                            <label for="search">
+                                Pesquisar
+                            </label>
+                            <input type="text" ng-model="search" class="form-control" id="search" />
+                        </div>
                         <ul>
-                            <li ng-repeat="sala in historico">
+                            <!-- <li ng-repeat="sala in historico | filter:search">
                                 <p>
                                     <h5>Autor: {{sala.autor}}</h5>
                                 </p>
-                                <p>Host: <a href="{{sala.host}}">{{sala.host}}</a></p>
+                                <p>Host: <a href="{{sala.host}}" target="Salas">{{sala.host}}</a></p>
                                 <p>Projeto: {{sala.projeto}}</p>
                                 <p>Branch: {{sala.branch}}</p>
                                 <p>OS: {{sala.os}}</p>
@@ -129,7 +135,28 @@
                                 <button ng-click="pull(sala)" type="button" class="btn btn-primary"
                                     style="background-color: #28a745; border-color: white; background-image: linear-gradient(-180deg,#34d058,#28a745 90%);">Pull</button>
 
-                            </li>
+                            </li> -->
+                            <table ng-table="usersTable" class="table table-striped">
+                                <tr ng-repeat="sala in historico | filter: search">
+                                    <td data-title="'Autor'">{{sala.autor}}</td>
+                                    <td data-title="'Host'"><a href="{{sala.host}}" target="Salas">{{sala.host}}</a></td>
+                                    <td data-title="'Branch'">{{sala.branch}}</td>
+                                    <td data-title="'Comandos'">
+                                        <div class="btn-group">
+                                            <button ng-click="pull(sala)" type="button" class="btn btn-primary"
+                                                style="background-color: #28a745; border-color: white; background-image: linear-gradient(-180deg,#34d058,#28a745 90%);">Pull</button>
+                                            <button ng-click="info(sala)" type="button" class="btn btn-default"
+                                                style="border-color: white; ">Info</button>
+                                            <button ng-click="excluir(sala)" type="button" class="btn btn-danger"
+                                                style="background-color:#cb2431; border-color: white; ">Excluir</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tfoot>
+                                    <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true">
+                                    </dir-pagination-controls>
+                                </tfoot>
+                            </table>
                         </ul>
                     </div>
                     <div class="modal-footer">
