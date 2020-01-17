@@ -123,7 +123,7 @@ app.get('/criarsala', function (req, res) {
 
     execCommand(comandosVendas[0], '');
 
-    request(`http://10.102.0.32:3000/decrypt?palavra=faf6a30f70daabc6d657`, { json: true }, (err, response, body) => {
+    request(`http://10.102.0.32:3000/decrypt?palavra=faf6a30f70daabc6d658032cc9d2`, { json: true }, (err, response, body) => {
 
         if (err) { return console.log(err); }
 
@@ -171,9 +171,6 @@ app.get('/criarsala', function (req, res) {
         }
         else {
             var projeto = req.query.projeto.replace('//', `//renanrosalojasmm:${response.body}@`);
-            var properties = PropertiesReader(`/servicos/Salas/${folder}/.properties`);
-            var port = properties.get('application.port');
-            
             comando = `git clone -b ${req.query.branch} ${projeto} ${folder}`;
             log.info(comando);
             exec(comando, (error, stdout, stderr) => {
@@ -194,6 +191,11 @@ app.get('/criarsala', function (req, res) {
                 res.send(sdtout);
             })
 
+            
+            var properties = PropertiesReader(`/servicos/Salas/${folder}/.properties`);
+            var portServer = properties.get('application.port');
+            var port = Math.floor((Math.random() * 10000) + 41050);
+
             comando = `docker run -d -it --rm --name ${name} -p ${port}:${portServer} -v /servicos/Salas/${folder}:/usr/src/app -w /usr/src/app node:13.6.0-alpine3.10 node server.js`
             log.info(comando);
             exec(comando, { cwd: folder }, (error, stdout, stderr) => {
@@ -203,7 +205,13 @@ app.get('/criarsala', function (req, res) {
                 log.error(stderr);
                 res.send(sdtout);
             })
+            req.query.host = host + ':' + port;
+            req.query.folder = folder;
+            db.insert(req.query, function (err, newDoc) {
+            });
 
+            log.info('Sala criada com sucesso');
+            res.send(`${host}:${port}`);
         }
     });
 });
@@ -215,7 +223,7 @@ app.get('/carregarhistorico', function (req, res) {
 });
 
 app.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname + '/site/index.html'));
+    res.sendFile(path.join(__dirname + '/index.html'));
 });
 
 app.listen(porta);

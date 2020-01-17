@@ -41,6 +41,11 @@
                                 data-target="#myModal" style="color: white !important">Histórico <span
                                     class="sr-only">(current)</span></a>
                         </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#" ng-click="carregarAjuda()" data-toggle="modal"
+                                data-target="#myModalAjuda" style="color: white !important">Ajuda <span
+                                    class="sr-only">(current)</span></a>
+                        </li>
                     </ul>
                 </nav>
                 <div class="row">
@@ -166,6 +171,28 @@
                                 </tfoot>
                             </table>
                         </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <dv class="modal fade" id="myModalAjuda" role="dialog">
+            <div class="modal-dialog" style="max-width: 900px">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Ajuda</h4>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">X</button>
+                    </div>
+                    <div class="modal-body">
+                        <h3>Aplicações Nodejs</h3>
+                        <p>O arquivo principal da aplicação deve ser o server.js, e ele deve estar na raiz do projeto</p>
+                        <p>Crie o arquivo .properties na raíz do seu projeto, crie a tag "application" e coloque a propriedade "port" e atribua a ela a porta que seu servidor irá executar.</p>
+                        <p>Conforme no exemplo abaixo:</p>
+                        <p>[application]</p>
+                        <p>port = 18000</p>
+                        <h4>Dessa forma seu app estára apto a ser executado pelo sistema de Salas</h4>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
