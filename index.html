@@ -55,6 +55,13 @@
                         <form role="form">
                             <div class="form-group">
                                 <label for="exampleInputBranch">
+                                    URL do projeto no Github
+                                </label>
+                                <input type="text" ng-model="sala.projeto" class="form-control" id="exampleInputProject"
+                                    required />
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputBranch">
                                     Branch
                                 </label>
                                 <input type="text" ng-model="sala.branch" class="form-control" id="exampleInputBranch"
@@ -99,7 +106,7 @@
             </div>
         </div>
         <footer class="page-footer font-small blue pt-4" style="color: white; background-color: black;">
-            <div class="footer-copyright text-center py-3"><b>© 2019 MMLabs</b></a>
+            <div class="footer-copyright text-center py-3"><b>© 2020 MMLabs</b></a>
                 <p></p>
             </div>
         </footer>
@@ -139,7 +146,8 @@
                             <table ng-table="usersTable" class="table table-striped">
                                 <tr ng-repeat="sala in historico | filter: search">
                                     <td data-title="'Autor'">{{sala.autor}}</td>
-                                    <td data-title="'Host'"><a href="{{sala.host}}" target="Salas">{{sala.host}}</a></td>
+                                    <td data-title="'Host'"><a href="{{sala.host}}" target="Salas">{{sala.host}}</a>
+                                    </td>
                                     <td data-title="'Branch'">{{sala.branch}}</td>
                                     <td data-title="'Comandos'">
                                         <div class="btn-group">

@@ -2,20 +2,22 @@ var app = angular.module('salas', ['ngTable']);
 
 app.controller('mainController', function ($scope, $http) {
 
-    var host = 'http://10.1.2.32:9098';
+    var host = 'http://10.102.0.32:9098';
 
     $scope.names = [
         "Alexsandra Marques",
         "Anny Navarro",
         "Awdren Venancio",
+        "Diego Uczak",
         "Eduardo Cordeiro",
         "Eduardo Rodrigues",
         "Fernanda Szumski",
-        "Hector Nagao",
+        "Geovani Alves",
         "Jean Mello",
-        "Jessica Machado",
+        "Jessica Paola",
         "Jessica Zambianco",
-        "Joao Pucci",
+        "João Pedro",
+        "Kin Henrique Kurek",
         "Lucas Rosa",
         "Nilton Amaral",
         "Paulo Ribas",
@@ -152,7 +154,6 @@ app.controller('mainController', function ($scope, $http) {
             timeout: 1000000
         });
 
-        $scope.sala.projeto = 'https://github.com/lojasmm/MMWeb.git';
         $scope.sala.autor = $scope.autor.replace(" ", "-");
 
         $http({
