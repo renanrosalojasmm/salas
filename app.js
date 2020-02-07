@@ -107,7 +107,8 @@ app.get('/criarsala', function (req, res) {
         'git pull',
         `rm -d -f -r /Public`,
         `cp -R -n /Public_MMWeb /Public`,
-        `cp -R -n /Public /servicos/Salas/${folder}/`
+        `cp -R -n /Public /servicos/Salas/${folder}/`,
+        `docker run --name ${name} -p ${port}:80 -v /servicos/Salas/${folder}:/var/www/html/app -d renanrosa/ubuntu-php7-apache2-webvendas`
         
     ];
 
