@@ -3,23 +3,25 @@ var app = angular.module('salas', ['ngTable']);
 app.controller('mainController', function ($scope, $http) {
 
     var host = 'http://10.102.0.32:9098';
+    //var host = 'http://localhost:9098';
 
     $scope.names = [
         "Alexsandra Marques",
         "Anny Navarro",
         "Awdren Venancio",
         "Diego Uczak",
-        "Eduardo Cordeiro",
-        "Eduardo Rodrigues",
         "Fernanda Szumski",
         "Geovani Alves",
+        "Jean Daniel",
         "Jean Mello",
         "Jessica Paola",
         "Jessica Zambianco",
-        "João Pedro",
+        "Joao Pedro",
+        "Joao Victor",
         "Kin Henrique Kurek",
         "Lucas Rosa",
         "Nilton Amaral",
+        "Norton Zander",
         "Paulo Ribas",
         "Renan Rosa",
         "Vinicius Santos"
@@ -50,7 +52,6 @@ app.controller('mainController', function ($scope, $http) {
                         url: host + '/excluir',
                         params: { folder: sala.folder }
                     }).then(function successCallback(response) {
-                        console.log(response.data);
                         iziToast.destroy();
                         iziToast.success({
                             title: 'Feito!',
@@ -61,7 +62,13 @@ app.controller('mainController', function ($scope, $http) {
 
                     },
                         function errorCallback(response) {
-                            console.error(response.data)
+                            iziToast.destroy();
+                            iziToast.success({
+                                title: 'Feito!',
+                                message: 'Container excluido',
+                                position: 'center'
+                            });
+                            $scope.carregarHistorico();
                         });
                 }, true],
                 ['<button>Cancelar</button>', function (instance, toast) {
@@ -143,49 +150,55 @@ app.controller('mainController', function ($scope, $http) {
 
     $scope.criarSala = function () {
 
-        iziToast.info({
-            title: 'Aguarde',
-            message: 'Criando sala',
-            position: 'center',
-            overlay: true,
-            close: false,
-            closeOnEscape: false,
-            closeOnClick: false,
-            timeout: 1000000
-        });
 
-        $scope.sala.autor = $scope.autor.replace(" ", "-");
+        if($scope.sala.projeto != "" && $scope.sala.projeto != undefined 
+            && $scope.sala.branch != "" && $scope.sala.branch != undefined ){
 
-        $http({
-            method: 'GET',
-            url: host + '/criarsala',
-            params: { projeto: $scope.sala.projeto, branch: $scope.sala.branch, os: $scope.sala.os, descricao: $scope.sala.descricao, autor: $scope.sala.autor }
-        }).then(function successCallback(response) {
-            console.log(response);
-            $scope.sala = {};
-            iziToast.destroy();
-            iziToast.success({
-                title: 'Sucesso',
-                message: 'Sala criada, para acessá-la use: <a href="' + response.data + '" target="Salas"> ' + response.data + '</a>',
+            iziToast.info({
+                title: 'Aguarde',
+                message: 'Criando sala',
                 position: 'center',
                 overlay: true,
-                close: true,
+                close: false,
+                closeOnEscape: false,
+                closeOnClick: false,
                 timeout: 1000000
             });
-        },
-            function errorCallback(response) {
+    
+            $scope.sala.autor = $scope.autor.replace(" ", "-");
+    
+            $http({
+                method: 'GET',
+                url: host + '/criarsala',
+                params: { projeto: $scope.sala.projeto, branch: $scope.sala.branch, os: $scope.sala.os, descricao: $scope.sala.descricao, autor: $scope.sala.autor }
+            }).then(function successCallback(response) {
+                console.log(response);
+                $scope.sala = {};
                 iziToast.destroy();
-                iziToast.error({
-                    title: 'Erro',
-                    message: 'Problemas ao criar a sala',
+                iziToast.success({
+                    title: 'Sucesso',
+                    message: 'Sala criada, para acessá-la use: <a href="' + response.data + '" target="Salas"> ' + response.data + '</a>',
                     position: 'center',
                     overlay: true,
-                    close: false,
-                    timeout: 1000000,
-                    closeOnClick: true
+                    close: true,
+                    timeout: 1000000
                 });
-                console.error(response.data)
-            });
-    }
+            },
+                function errorCallback(response) {
+                    iziToast.destroy();
+                    iziToast.error({
+                        title: 'Erro',
+                        message: 'Problemas ao criar a sala',
+                        position: 'center',
+                        overlay: true,
+                        close: false,
+                        timeout: 1000000,
+                        closeOnClick: true
+                    });
+                    console.error(response.data)
+                });
+        }
 
+
+        }
 });

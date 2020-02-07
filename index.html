@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
     <link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/github-fork-ribbon-css/gh-fork-ribbon.css">
     <script src="jquery/dist/jquery.slim.min.js"></script>
@@ -88,14 +89,14 @@
                                     Ordem de serviço
                                 </label>
                                 <input type="number" ng-model="sala.os" class="form-control" id="exampleInputNumber"
-                                    required />
+                                     />
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputMessage">
                                     Descrição
                                 </label>
                                 <textarea class="form-control" id="exampleInputMessage" rows="4" cols="50"
-                                    ng-model="sala.descricao" required></textarea>
+                                    ng-model="sala.descricao"></textarea>
                             </div>
                             <button type="submit" class="btn btn-primary" ng-click="criarSala()"
                                 style="background-color: #28a745; border-color: white; background-image: linear-gradient(-180deg,#34d058,#28a745 90%);">

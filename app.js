@@ -61,12 +61,15 @@ app.get('/excluir', function (req, res) {
     execCommand(comando, '');
 
     req.query.folder = req.query.folder.replace('projetos/', '');
-    comando = 'docker rm -f ' + req.query.folder;
-    execCommand(comando);
-
+    
     db.remove({ folder: 'projetos/' + req.query.folder }, {}, function (err, numRemoved) {
     });
     console.log(req.query.folder + ' excluido');
+    
+    comando = 'docker rm -f ' + req.query.folder;
+    execCommand(comando);
+
+    
     res.send(true);
 });
 
@@ -82,14 +85,15 @@ app.get('/pull', function (req, res) {
 
 app.get('/criarsala', function (req, res) {
 
+    console.log(req.query);
     var today = new Date();
     var dd = today.getDate();
     var mm = today.getMonth() + 1;
     var yyyy = today.getFullYear();
     var host = 'http://10.102.0.32';
     var port = Math.floor((Math.random() * 10000) + 41050);
-    req.query.autor = req.query.autor.replace(/[^a-zA-Z]/g, "");
-
+    //req.query.autor = req.query.autor.replace("-", " ");
+    //req.query.autor = req.query.autor.replace(/[^a-zA-Z]/g, "");
     var name = `${req.query.autor}-${req.query.os}-${dd}-${mm}-${yyyy}`;
     var folder = 'projetos/' + `${req.query.autor}-${req.query.os}-${dd}-${mm}-${yyyy}`;
     const exec = require("child_process").execSync;
@@ -103,8 +107,7 @@ app.get('/criarsala', function (req, res) {
         'git pull',
         `rm -d -f -r /Public`,
         `cp -R -n /Public_MMWeb /Public`,
-        `cp -R -n /Public /servicos/Salas/${folder}/`,
-        `docker run --name ${name} -p ${port}:80 -v app:/var/www/html/app -d renanrosa/ubuntu-php7-apache2-webvendas`
+        `cp -R -n /Public /servicos/Salas/${folder}/`
         
     ];
 
@@ -117,7 +120,7 @@ app.get('/criarsala', function (req, res) {
         `rm -d -f -r /Public`,
         `cp -R -n /Public_Extranet /Public`,
         `cp -R -n /Public /servicos/Salas/${folder}/`,
-        `docker run --name ${name} -p ${port}:80 -d -v /servicos/Salas/${folder}:/srv/www/default/intranova/intranetPiloto1/ renanrosa/extranet`,
+        `docker run --rm --name ${name} -p ${port}:80 -d -v /servicos/Salas/${folder}:/srv/www/default/intranova/intranetPiloto1/ renanrosa/extranet`,
         `docker exec ${name} /opt/lampp/lampp restart`
     ];
 
@@ -130,7 +133,6 @@ app.get('/criarsala', function (req, res) {
         console.log(req.query.projeto);
 
         if (req.query.projeto.includes("MMWeb")) {
-
             execCommand(comandosVendas[1], 'projetos/MMWEB_MASTER');
             execCommand(comandosVendas[2], '');
             execCommand(comandosVendas[3], folder);
@@ -139,8 +141,17 @@ app.get('/criarsala', function (req, res) {
             execCommand(comandosVendas[6], '');
             execCommand(comandosVendas[7], '');
             execCommand(comandosVendas[8], '');
-            execCommand(comandosVendas[9], '');
-            execCommand(comandosVendas[10], '');
+            
+            var port = Math.floor((Math.random() * 10000) + 41050);
+            var comando = `docker run --rm --name ${name} -p ${port}:80 -v $(pwd):/var/www/html/app -d renanrosa/ubuntu-php7-apache2-webvendas`
+            log.info(comando);
+            exec(comando, { cwd: folder }, (error, stdout, stderr) => {
+                if (stderr) log.error(stderr);
+                log.error(error);
+                log.info(stdout);
+                log.error(stderr);
+                res.send(sdtout);
+            })
             req.query.host = host + ':' + port;
             req.query.folder = folder;
             db.insert(req.query, function (err, newDoc) {
@@ -150,7 +161,7 @@ app.get('/criarsala', function (req, res) {
             res.send(`${host}:${port}`);
         }
         if (req.query.projeto.includes("Extranet")) {
-
+            var port = Math.floor((Math.random() * 10000) + 41050);
             execCommand(comandosExtra[0], 'projetos/EXTRANET_MASTER');
             execCommand(comandosExtra[1], '');
             execCommand(comandosExtra[2], folder);
@@ -169,7 +180,7 @@ app.get('/criarsala', function (req, res) {
             log.info('Sala criada com sucesso');
             res.send(`${host}:${port}`);
         }
-        else {
+        if(!req.query.projeto.includes("Extranet") && !req.query.projeto.includes("MMWeb")) {
             var projeto = req.query.projeto.replace('//', `//renanrosalojasmm:${response.body}@`);
             comando = `git clone -b ${req.query.branch} ${projeto} ${folder}`;
             log.info(comando);
